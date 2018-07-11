@@ -24,7 +24,6 @@ class RosExecuterNodeBase : public RosNodeBase
     namespace_.erase(0, 1);
     this->nodeHandle_ = new ros::NodeHandle("~");
     this->nodeName_ = ros::this_node::getName();
-
   }
   ;
   virtual ~RosExecuterNodeBase()

@@ -2,7 +2,7 @@
 
 
 
-packages = ['ros_node_base']
+packages = ['ros_node_base_py','ros_tf_publisher_py']
 package_dir = {'': 'src'}
 try:
 	from distutils.core import setup

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>ros_node_base</name>
+  <name>ros_node_utils</name>
   <version>0.0.0</version>
   <description>This package contains parent class for most generic ros node structure and helper methods for reading parameters from rosparam</description>
 
