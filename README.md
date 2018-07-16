@@ -1,9 +1,15 @@
 # ros_node_utils
 The ros_node_utils offers a easy to follow "object oriented programming" scheme for fast prototyping and developing modules integrated to ROS system. ros_node utils offers following options;
 * RosNodeBase (cpp/py) : a parent class that contains all essential functions required by a simple ros module
-* RosExecuterBase (cpp/py) : a parent class to easily create executable ros module, which potentially contain multiple objects of RosNodeBase drived classes.
+* RosExecuterNodeBase (cpp/py) : a parent class to easily create executable ros module, which potentially contain multiple objects of RosNodeBase drived classes.
 * RosTfPublisher(py) : a interface to easily publish constant transformations or to route published poses to transformations for RViZ visualizations. (cpp version will be added with additional functionallity)
 * RosParamReader(cpp) : Coming soon. simple interface to assign rosparameters to prefered types (std::vector,eigen::MatrixXd,eigen::VectorXd etc.)  
+
+## Installization 
+Simply clone and add it to your catkin workspace. 
+
+## Usage 
+Inherit your class from RosNodeBase/RosExecuterNodeBase. Examples are on the way.
 
 ## System Requirements
 ros_node_utils package requires following system specifications; 
