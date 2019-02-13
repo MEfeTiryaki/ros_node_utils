@@ -9,7 +9,7 @@
 
 #include <ros_node_base/RosNodeBase.hpp>
 
-namespace ros_node_base {
+namespace ros_node_utils {
 
 class RosExecuterNodeBase : public RosNodeBase
 {
@@ -31,17 +31,17 @@ class RosExecuterNodeBase : public RosNodeBase
   }
   ;
 
-  virtual void initilize() override
+  virtual void initialize() override
   {
     readParameters();
 
-    initilizePublishers();
+    initializePublishers();
     // init Subscribers
-    initilizeSubscribers();
+    initializeSubscribers();
     // init Services
-    initilizeServices();
+    initializeServices();
     // init Services
-    initilizeActionServers();
+    initializeActionServers();
   }
   virtual void execute()
   {

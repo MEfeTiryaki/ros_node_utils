@@ -52,10 +52,10 @@ class RosTfPublisher(RosExecuterNodeBase):
                 continueToRead = False
             i = i + 1
 
-    def initilizePublishers(self):
-        rospy.loginfo("[TfPublisher] : The Publishers are initilized")
+    def initializePublishers(self):
+        rospy.loginfo("[TfPublisher] : The Publishers are initialized")
 
-    def initilizeSubscribers(self):
+    def initializeSubscribers(self):
         self.poseSubscribers_ = []
         for i in range(0,len(self.tfSourceName_)):
             if self.tfSourceName_[i] != "None":
@@ -65,10 +65,10 @@ class RosTfPublisher(RosExecuterNodeBase):
                                           , callback_args =  i    \
                                           ))
                 #rospy.loginfo("[TfPublisher] :" + self.tfSourceName_[i]  )
-        rospy.loginfo("[TfPublisher] : The Subscribers are initilized")
+        rospy.loginfo("[TfPublisher] : The Subscribers are initialized")
 
-    def initilizeServices(self):
-        rospy.loginfo("[TfPublisher] : The Servises are initilized")
+    def initializeServices(self):
+        rospy.loginfo("[TfPublisher] : The Servises are initialized")
 
     def execute(self):
         self.rate_ = rospy.Rate(self.frequency_)

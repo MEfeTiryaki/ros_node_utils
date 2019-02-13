@@ -12,7 +12,9 @@
 #include <unordered_map>
 #include <functional>
 
-namespace ros_node_base {
+#include <ros_node_base/ros_node_utils.hpp>
+
+namespace ros_node_utils {
 
 class RosNodeBase
 
@@ -50,25 +52,25 @@ class RosNodeBase
   }
   ;
   // initize class variables
-  virtual void initilize()
+  virtual void initialize()
   {
 
   }
   ;
   // init Publisher
-  virtual void initilizePublishers()
+  virtual void initializePublishers()
   {
 
   }
   ;
   // init Subscribers
-  virtual void initilizeSubscribers()
+  virtual void initializeSubscribers()
   {
 
   }
   ;
   // init Services
-  virtual void initilizeServices()
+  virtual void initializeServices()
   {
     //services_.insert(
     //    std::make_pair<std::string, ros::ServiceServer>(
@@ -78,7 +80,7 @@ class RosNodeBase
   }
   ;
   // init Services
-  virtual void initilizeActionServers()
+  virtual void initializeActionServers()
   {
 
   }

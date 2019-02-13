@@ -28,13 +28,13 @@ class RosExecuterNodeBase(RosNodeBase):
         # ROS Node initilization
         rospy.init_node(self.nodeName_)
         # initize class variables
-        self.initilize()
+        self.initialize()
         # init Publisher
-        self.initilizePublishers()
+        self.initializePublishers()
         # init Subscribers
-        self.initilizeSubscribers()
+        self.initializeSubscribers()
         # init Services
-        self.initilizeServices()
+        self.initializeServices()
         # Start estimator
         self.execute()
 
@@ -48,24 +48,24 @@ class RosExecuterNodeBase(RosNodeBase):
         """
         # namespace of the node
         self.ns_ = rospy.get_namespace()
-    def initilize(self):
-        """ Initilize the necessary objects here and call other initilization methods for your instance variables if there is any.
+    def initialize(self):
+        """ initialize the necessary objects here and call other initilization methods for your instance variables if there is any.
         """
         pass
     def readParameters(self):
         """ Read ROS parameters and any other input file here
         """
         pass
-    def initilizePublishers(self):
-        """ Initilize all publishers here
+    def initializePublishers(self):
+        """ initialize all publishers here
         """
         pass
-    def initilizeSubscribers(self):
-        """ Initilize all subscribers here
+    def initializeSubscribers(self):
+        """ initialize all subscribers here
         """
         pass
-    def initilizeServices(self):
-        """ Initilize all services here
+    def initializeServices(self):
+        """ initialize all services here
         """
         pass
     def execute(self):
