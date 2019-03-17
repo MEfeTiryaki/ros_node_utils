@@ -81,7 +81,7 @@ class GazeboModelPluginBase : public ModelPlugin, public ros_node_utils::RosNode
 
   /*! \~english
    */
-  virtual void initializeJointStructures();
+  virtual void initializeJointStructure();
 
   /*! \~english
    */
