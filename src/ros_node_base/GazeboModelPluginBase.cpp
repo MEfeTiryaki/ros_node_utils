@@ -35,11 +35,10 @@ void GazeboModelPluginBase::Load(physics::ModelPtr model, sdf::ElementPtr sdf /*
 
   create();
 
-  // Note : check if this is placed correctly
   readParameters(sdf);
 
   // initialize joint structure
-  initializeJointStructures();
+  initializeJointStructure();
   initializeLinkStructure();
 
 
@@ -70,11 +69,9 @@ void GazeboModelPluginBase::readParameters(sdf::ElementPtr sdf)
 {
 }
 
-
-void GazeboModelPluginBase::initializeJointStructures()
+void GazeboModelPluginBase::initializeJointStructure()
 {
 }
-
 
 void GazeboModelPluginBase::initializeLinkStructure()
 {
@@ -84,10 +81,10 @@ void GazeboModelPluginBase::readSimulation()
 {
 }
 
-
 void GazeboModelPluginBase::writeSimulation()
 {
 }
+
 void GazeboModelPluginBase::publish()
 {
 }
