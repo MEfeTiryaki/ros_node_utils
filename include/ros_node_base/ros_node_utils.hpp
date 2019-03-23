@@ -3,7 +3,7 @@
  Author: Mehmet Efe Tiryaki
  E-mail: m.efetiryaki@gmail.com
  Date created: 12.02.2019
- Date last modified: 12.02.2019
+ Date last modified: 21.03.2019
  */
 #pragma once
 
@@ -16,14 +16,31 @@
 
 namespace ros_node_utils {
 
+inline bool ERROR(std::string text)
+{
+  std::cout << "\033[0;91m" << text << "\033[0m" << std::endl;
+  return false;
+}
+
+inline bool WARNING(std::string text)
+{
+  std::cout << "\033[0;93m" << text << "\033[0m" << std::endl;
+  return true;
+}
+
+inline bool CONFIRM(std::string text)
+{
+  std::cout << "\033[0;92m" << text << "\033[0m" << std::endl;
+  return true;
+}
+
 inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, bool& variable)
 {
   //std::cerr << "\033[0;32m" << paramName << "\033[0m" << std::endl;
   if (NodeHandle->hasParam(paramName)) {
     NodeHandle->getParam(paramName, variable);
   } else {
-    std::cerr << "\033[0;31m" << paramName << " is not found. " << "\033[0m" << std::endl;
-    return false;
+    return ERROR(paramName + " is not found. ");
   }
   return true;
   //std::cerr << "\033[0;31m" << variable << "\033[0m" << std::endl;
@@ -35,8 +52,7 @@ inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, int& v
   if (NodeHandle->hasParam(paramName)) {
     NodeHandle->getParam(paramName, variable);
   } else {
-    std::cerr << "\033[0;31m" << paramName << " is not found. " << "\033[0m" << std::endl;
-    return false;
+    return ERROR(paramName + " is not found. ");
   }
   return true;
   //std::cerr << "\033[0;31m" << variable << "\033[0m" << std::endl;
@@ -48,8 +64,7 @@ inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, double
   if (NodeHandle->hasParam(paramName)) {
     NodeHandle->getParam(paramName, variable);
   } else {
-    std::cerr << "\033[0;31m" << paramName << " is not found. " << "\033[0m" << std::endl;
-    return false;
+    return ERROR(paramName + " is not found. ");
   }
   return true;
   //std::cerr << "\033[0;31m" << variable << "\033[0m" << std::endl;
@@ -61,8 +76,7 @@ inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, std::s
   if (NodeHandle->hasParam(paramName)) {
     NodeHandle->getParam(paramName, variable);
   } else {
-    std::cerr << "\033[0;31m" << paramName << " is not found. " << "\033[0m" << std::endl;
-    return false;
+    return ERROR(paramName + " is not found. ");
   }
   return true;
   //std::cerr << "\033[0;31m" << variable << "\033[0m" << std::endl;
@@ -75,8 +89,7 @@ inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName,
   if (NodeHandle->hasParam(paramName)) {
     NodeHandle->getParam(paramName, variable);
   } else {
-    std::cerr << "\033[0;31m" << paramName << " is not found. " << "\033[0m" << std::endl;
-    return false;
+    return ERROR(paramName + " is not found. ");
   }
   return true;
 }
@@ -88,8 +101,7 @@ inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName,
   if (NodeHandle->hasParam(paramName)) {
     NodeHandle->getParam(paramName, variable);
   } else {
-    std::cerr << "\033[0;31m" << paramName << " is not found. " << "\033[0m" << std::endl;
-    return false;
+    return ERROR(paramName + " is not found. ");
   }
   return true;
 
@@ -102,8 +114,7 @@ inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName,
   if (NodeHandle->hasParam(paramName)) {
     NodeHandle->getParam(paramName, variable);
   } else {
-    std::cerr << "\033[0;31m" << paramName << " is not found. " << "\033[0m" << std::endl;
-    return false;
+    return ERROR(paramName + " is not found. ");
   }
   return true;
 
@@ -119,8 +130,7 @@ inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, Eigen:
     ptr = &buffer[0];
     variable.diagonal() << Eigen::Map<Eigen::VectorXd>(ptr, buffer.size());
   } else {
-    std::cerr << "\033[0;31m" << paramName << " is not found. " << "\033[0m" << std::endl;
-    return false;
+    return ERROR(paramName + " is not found. ");
   }
   return true;
 
@@ -141,8 +151,7 @@ inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, Eigen:
       variable(i / col, i % col) = buffer[i];
     }
   } else {
-    std::cerr << "\033[0;31m" << paramName << " is not found. " << "\033[0m" << std::endl;
-    return false;
+    return ERROR(paramName + " is not found. ");
   }
   return true;
   //std::cerr << "\033[0;31m" << variable << "\033[0m" << std::endl;
@@ -151,6 +160,7 @@ inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, Eigen:
 inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, Eigen::VectorXd& variable)
 {
   //std::cerr << "\033[0;32m" << paramName << "\033[0m" << std::endl;
+  int prevSize = variable.size();
   std::vector<double> buffer;
   if (NodeHandle->hasParam(paramName)) {
     NodeHandle->getParam(paramName, buffer);
@@ -159,8 +169,12 @@ inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, Eigen:
       variable[i] = buffer[i];
     }
   } else {
-    std::cerr << "\033[0;31m" << paramName << " is not found. " << "\033[0m" << std::endl;
-    return false;
+    return ERROR(paramName + " is not found. ");
+  }
+  if (prevSize != variable.size()) {
+    return WARNING(
+        paramName + " has changed the vector size from " + std::to_string(prevSize) + " to "
+            + std::to_string(variable.size()));
   }
   return true;
 
@@ -179,8 +193,7 @@ inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, Eigen:
       variable[i] = buffer[i];
     }
   } else {
-    std::cerr << "\033[0;31m" << paramName << " is not found. " << "\033[0m" << std::endl;
-    return false;
+    return ERROR(paramName + " is not found. ");
   }
   return true;
 
@@ -199,8 +212,7 @@ inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, Eigen:
       variable[i] = buffer[i];
     }
   } else {
-    std::cerr << "\033[0;31m" << paramName << " is not found. " << "\033[0m" << std::endl;
-    return false;
+    return ERROR(paramName + " is not found. ");
   }
   return true;
   //std::cerr << "\033[0;31m" << variable.transpose() << "\033[0m" << std::endl;
@@ -218,44 +230,32 @@ inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, Eigen:
       variable[i] = buffer[i];
     }
   } else {
-    std::cerr << "\033[0;31m" << paramName << " is not found. " << "\033[0m" << std::endl;
-    return false;
+    return ERROR(paramName + " is not found. ");
   }
   return true;
 
   //std::cerr << "\033[0;31m" << variable.transpose() << "\033[0m" << std::endl;
 }
 
-inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName,
-                      Eigen::Quaterniond& variable)
+// TODO : ADD a Quaternion value check
+inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, Eigen::Quaterniond& variable)
 {
+  int size = 4;
   //std::cerr << "\033[0;32m" << paramName << "\033[0m" << std::endl;
   std::vector<double> buffer;
   if (NodeHandle->hasParam(paramName)) {
     NodeHandle->getParam(paramName, buffer);
-    variable = Eigen::Quaterniond(buffer[3], buffer[0], buffer[1], buffer[2]);
+    if(buffer.size()==4){
+      variable = Eigen::Quaterniond(buffer[0],buffer[1],buffer[2],buffer[3]);
+    }else{
+      return ERROR(paramName + " is not a Quaternion ");
+    }
   } else {
-    std::cerr << "\033[0;31m" << paramName << " is not found. " << "\033[0m" << std::endl;
-    return false;
+    return ERROR(paramName + " is not found. ");
   }
   return true;
-}
 
-inline void ERROR(std::string text)
-{
-
-  std::cout << "\033[0;91m" << text << "\033[0m" << std::endl;
-}
-
-inline void WARNING(std::string text)
-{
-
-  std::cout << "\033[0;93m" << text << "\033[0m" << std::endl;
-}
-
-inline void CONFIRM(std::string text)
-{
-  std::cout << "\033[0;92m" << text << "\033[0m" << std::endl;
+  //std::cerr << "\033[0;31m" << variable.transpose() << "\033[0m" << std::endl;
 }
 
 }  // namespace ros_node_utils
