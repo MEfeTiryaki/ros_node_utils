@@ -43,6 +43,10 @@ class EffortModuleBase : public ros_node_utils::RosNodeModuleBase
   }
   ;
 
+  virtual void advance()
+  {
+
+  }
   virtual void setName(std::string name)
   {
     name_ = name;
