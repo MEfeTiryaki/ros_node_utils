@@ -3,7 +3,7 @@
  Author: Mehmet Efe Tiryaki
  E-mail: m.efetiryaki@gmail.com
  Date created: 29.01.2019
- Date last modified: 12.02.2019
+ Date last modified: 14.04.2019
  */
 #pragma once
 
@@ -117,4 +117,3 @@ class GazeboModelPluginBase : public ModelPlugin, public ros_node_utils::RosNode
 
 };
 }
-

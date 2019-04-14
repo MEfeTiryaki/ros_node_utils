@@ -1,9 +1,9 @@
 /*
- File name: EffortModuleBase.hpp
+ File name: WrenchModuleBase.hpp
  Author: Mehmet Efe Tiryaki
  E-mail: tiryaki@is.mpg.de or m.efetiryaki@gmail.com
  Date created: 25.01.2019
- Date last modified: 17.03.2019
+ Date last modified: 14.04.2019
  */
 //TODO EFE TIRYAKI 21.03.2019 : separate the visulization part
 #pragma once
@@ -19,12 +19,12 @@
 #include "ros_node_utils/RosNodeModuleBase.hpp"
 
 namespace gazebo {
-namespace effort {
+namespace wrench {
 
-class EffortModuleBase : public ros_node_utils::RosNodeModuleBase
+class WrenchModuleBase : public ros_node_utils::RosNodeModuleBase
 {
  public:
-  EffortModuleBase(ros::NodeHandle* nodeHandle)
+  WrenchModuleBase(ros::NodeHandle* nodeHandle)
       : ros_node_utils::RosNodeModuleBase(nodeHandle),
         scale_(1.0)
   {
@@ -32,7 +32,7 @@ class EffortModuleBase : public ros_node_utils::RosNodeModuleBase
   }
   ;
 
-  virtual ~EffortModuleBase()
+  virtual ~WrenchModuleBase()
   {
   }
   ;
@@ -178,5 +178,5 @@ class EffortModuleBase : public ros_node_utils::RosNodeModuleBase
   Eigen::Vector4d torqueColor_;
   double scale_;
 };
-}  // namespace effort
+}  // namespace wrench
 }  // namespace gazebo
