@@ -16,7 +16,7 @@
 
 #include <Eigen/Dense>
 
-#include "ros_node_base/RosNodeModuleBase.hpp"
+#include "ros_node_utils/RosNodeModuleBase.hpp"
 
 namespace gazebo {
 namespace effort {

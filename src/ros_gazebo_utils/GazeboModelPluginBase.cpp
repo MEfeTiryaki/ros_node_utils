@@ -3,11 +3,11 @@
  Author: Mehmet Efe Tiryaki
  E-mail: m.efetiryaki@gmail.com
  Date created: 12.02.2019
- Date last modified: 12.02.2019
+ Date last modified: 14.04.2019
  */
 
 
-#include "ros_node_base/GazeboModelPluginBase.hpp"
+#include "ros_gazebo_utils/GazeboModelPluginBase.hpp"
 
 using namespace gazebo;
 
@@ -92,4 +92,3 @@ void GazeboModelPluginBase::publish()
 void GazeboModelPluginBase::publishTf()
 {
 }
-

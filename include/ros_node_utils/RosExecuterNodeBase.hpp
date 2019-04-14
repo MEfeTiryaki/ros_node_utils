@@ -7,7 +7,7 @@
  */
 #pragma once
 
-#include <ros_node_base/RosNodeBase.hpp>
+#include <ros_node_utils/RosNodeBase.hpp>
 
 namespace ros_node_utils {
 

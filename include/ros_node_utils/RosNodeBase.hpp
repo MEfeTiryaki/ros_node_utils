@@ -12,7 +12,7 @@
 #include <unordered_map>
 #include <functional>
 
-#include <ros_node_base/ros_node_utils.hpp>
+#include <ros_node_utils/ros_node_utils.hpp>
 
 namespace ros_node_utils {
 

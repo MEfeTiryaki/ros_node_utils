@@ -17,8 +17,6 @@ COMPONENTS
   tf
 )
 
-catkin_python_setup()
-
 catkin_package(
 INCLUDE_DIRS
   include
@@ -44,14 +42,14 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   ${GAZEBO_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIR}
-  
+
 )
 
 link_directories(
   ${GAZEBO_LIBRARY_DIRS}
 )
 add_executable(node
-  src/ros_node_base/node.cpp
+  src/ros_node_utils/node.cpp
 )
 add_dependencies(node
   ${catkin_EXPORTED_TARGETS}
@@ -63,7 +61,7 @@ target_link_libraries(node
 
 
 add_library( ${PROJECT_NAME}
-  src/ros_node_base/GazeboModelPluginBase.cpp
+  src/ros_gazebo_utils/GazeboModelPluginBase.cpp
 )
 add_dependencies(${PROJECT_NAME}
   ${catkin_EXPORTED_TARGETS}
