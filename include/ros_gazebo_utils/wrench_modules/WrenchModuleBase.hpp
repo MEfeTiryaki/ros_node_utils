@@ -2,10 +2,10 @@
  File name: WrenchModuleBase.hpp
  Author: Mehmet Efe Tiryaki
  E-mail: tiryaki@is.mpg.de or m.efetiryaki@gmail.com
- Date created: 25.01.2019
- Date last modified: 14.04.2019
+ Date created: 14.01.2019
+ Date last modified: 15.04.2019
  */
-//TODO EFE TIRYAKI 21.03.2019 : separate the visulization part
+
 #pragma once
 
 // c++

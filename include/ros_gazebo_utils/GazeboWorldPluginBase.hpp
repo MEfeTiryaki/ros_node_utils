@@ -1,9 +1,9 @@
 /*
- File name: GazeboModelPluginBase.hpp
+ File name: GazeboWorldPluginBase.hpp
  Author: Mehmet Efe Tiryaki
  E-mail: m.efetiryaki@gmail.com
  Date created: 29.01.2019
- Date last modified: 14.04.2019
+ Date last modified:  15.04.2019
  */
 #pragma once
 

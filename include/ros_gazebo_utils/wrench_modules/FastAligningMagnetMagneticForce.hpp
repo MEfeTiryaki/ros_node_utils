@@ -1,9 +1,9 @@
 /*
- File name: DragForce.hpp
+ File name: FastAligningMagnetMagneticForce.hpp
  Author: Mehmet Efe Tiryaki
  E-mail: tiryaki@is.mpg.de or m.efetiryaki@gmail.com
  Date created: 25.01.2019
- Date last modified: 17.03.2019
+ Date last modified: 15.04.2019
  */
 
 #pragma once
