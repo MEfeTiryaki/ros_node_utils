@@ -33,6 +33,8 @@
 #include <urdf/model.h>
 
 #include "ros_node_utils/RosNodeBase.hpp"
+#include "ros_gazebo_utils/wrench_modules/WrenchModuleBase.hpp"
+#include "ros_gazebo_utils/wrench_modules/GravityForce.hpp"
 
 namespace gazebo {
 
@@ -45,7 +47,8 @@ class GazeboModelPluginBase : public ModelPlugin, public ros_node_utils::RosNode
   /*! \~english
    Constructor
    */
-  GazeboModelPluginBase(){
+  GazeboModelPluginBase()
+  {
 
   }
   ;
@@ -53,7 +56,8 @@ class GazeboModelPluginBase : public ModelPlugin, public ros_node_utils::RosNode
   /*! \~english
    Destructor
    */
-  virtual ~GazeboModelPluginBase(){
+  virtual ~GazeboModelPluginBase()
+  {
 
   }
   ;
@@ -77,7 +81,6 @@ class GazeboModelPluginBase : public ModelPlugin, public ros_node_utils::RosNode
     initializeJointStructure();
     initializeLinkStructure();
 
-
     initialize();
     // initialize ROS pub/sub/services
     initializeSubscribers();
@@ -86,12 +89,14 @@ class GazeboModelPluginBase : public ModelPlugin, public ros_node_utils::RosNode
 
     // reset simulation variables
     Reset();
-  };
+  }
+  ;
 
   /*! \~english
    * Overrides Gazebo init function.
    */
-  virtual void Init(){
+  virtual void Init()
+  {
 
   }
   ;
@@ -100,65 +105,75 @@ class GazeboModelPluginBase : public ModelPlugin, public ros_node_utils::RosNode
    * Overrides Gazebo reset function.
    */
   //
-  virtual void Reset(){
+  virtual void Reset()
+  {
 
   }
   ;
   /*! \~english
    */
-  virtual void OnUpdate(){
+  virtual void OnUpdate()
+  {
     readSimulation();
     writeSimulation();
     publish();
     publishTf();
-  };
+  }
+  ;
 
  protected:
 
   /*! \~english
    * Reads parameters from the parameter server and sdf element.
    */
-  virtual void readParameters(sdf::ElementPtr sdf){
+  virtual void readParameters(sdf::ElementPtr sdf)
+  {
 
   }
   ;
   /*! \~english
    */
-  virtual void initializeJointStructure(){
+  virtual void initializeJointStructure()
+  {
 
   }
   ;
   /*! \~english
    */
-  virtual void initializeLinkStructure(){
+  virtual void initializeLinkStructure()
+  {
 
   }
   ;
   /*! \~english
    * Read simulation state.
    */
-  virtual void readSimulation(){
+  virtual void readSimulation()
+  {
 
   }
   ;
   /*! \~english
    * Writes simulation state.
    */
-  virtual void writeSimulation(){
+  virtual void writeSimulation()
+  {
 
   }
   ;
   /*! \~english
    * Publishes robot position, orientation and velocities.
    */
-  virtual void publish(){
+  virtual void publish()
+  {
 
   }
   ;
   /*! \~english
    * Publish Transforms of the robot
    */
-  virtual void publishTf(){
+  virtual void publishTf()
+  {
 
   }
   ;
@@ -169,6 +184,45 @@ class GazeboModelPluginBase : public ModelPlugin, public ros_node_utils::RosNode
   physics::ModelPtr model_;
   // World update event.
   event::ConnectionPtr updateConnection_;
+
+  // Name of the robot.
+  std::string robotName_;
+  // ROS robot description parameter name.
+  std::string robotDescriptionParamName_;
+  // Robot base link.
+  std::string robotBaseLink_;
+  // ROS robot description URDF string.
+  std::string robotDescriptionUrdfString_;
+  // ROS robot description URDF model.
+  urdf::Model robotDescriptionUrdfModel_;
+
+  // Pulishers
+  ros::Publisher posePublisher_;
+  ros::Publisher velocityPublisher_;
+  ros::Publisher markerPublisher_;
+
+  // Robot links
+  physics::LinkPtr baseLink_;
+  Eigen::Vector3d positionWorldToBase_;
+  Eigen::Quaterniond orientationWorldToBase_;
+  Eigen::Vector3d linearVelocityOfBaseInBaseFrame_;
+  Eigen::Vector3d angularVelocityOfBaseInBaseFrame_;
+
+  // gravitational force
+  wrench::GravityForce* gravityForceModule_;
+  // Wrench Module List
+  std::vector<wrench::WrenchModuleBase*> wrenchModules_;
+
+  // Gazebo time step.
+  double gazeboTimeStep_ = 0.0;
+  // Time step for publishing simulation state.
+  double publishingTimeStep_ = 0.0;
+  // Simulation time stamp taken at the start of the last updateCb() function call.
+  common::Time lastStartUpdateSimTime_;
+  // System time stamp taken at the start of the last updateCb() function call.
+  std::chrono::time_point<std::chrono::steady_clock> lastStartUpdateSysTime_;
+  // Current inter-update simulation time step.
+  double updateSimTimeStep_ = 0.0;
 
 };
 }

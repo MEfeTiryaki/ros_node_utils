@@ -16,17 +16,22 @@
 
 #include <Eigen/Dense>
 
+#include "ros_node_utils/ros_node_utils.hpp"
 #include "ros_node_utils/RosNodeModuleBase.hpp"
+#include "ros_gazebo_utils/WrenchLink.hpp"
 
+using namespace ros_node_utils;
 namespace gazebo {
 namespace wrench {
 
 class WrenchModuleBase : public ros_node_utils::RosNodeModuleBase
 {
  public:
-  WrenchModuleBase(ros::NodeHandle* nodeHandle)
+  WrenchModuleBase(ros::NodeHandle* nodeHandle, wrench::WrenchLink* link)
       : ros_node_utils::RosNodeModuleBase(nodeHandle),
-        scale_(1.0)
+        link_(link),
+        force_(Eigen::Vector3d::Zero()),
+        torque_(Eigen::Vector3d::Zero())
   {
 
   }
@@ -47,6 +52,7 @@ class WrenchModuleBase : public ros_node_utils::RosNodeModuleBase
   {
 
   }
+
   virtual void setName(std::string name)
   {
     name_ = name;
@@ -77,7 +83,7 @@ class WrenchModuleBase : public ros_node_utils::RosNodeModuleBase
 
   virtual Eigen::Vector3d getPosition()
   {
-    return position_;
+    return link_->getPositionWorldtoBase();
   }
   ;
 
@@ -89,7 +95,7 @@ class WrenchModuleBase : public ros_node_utils::RosNodeModuleBase
 
   virtual Eigen::Quaterniond getOrientation()
   {
-    return orientation_;
+    return link_->getOrientationWorldtoBase();
   }
   ;
 
@@ -101,7 +107,7 @@ class WrenchModuleBase : public ros_node_utils::RosNodeModuleBase
 
   virtual Eigen::Vector3d getLinearVelocity()
   {
-    return linearVelocity_;
+    return link_->getLinearVelocityOfBaseInBaseFrame();
   }
   ;
 
@@ -112,56 +118,28 @@ class WrenchModuleBase : public ros_node_utils::RosNodeModuleBase
   ;
   virtual Eigen::Vector3d getAngularVelocity()
   {
-    return angularVelocity_;
+    return link_->getAngularVelocityOfBaseInBaseFrame();
   }
   ;
 
-  virtual Eigen::Vector3d getForce()
+
+  virtual Eigen::Vector3d getForceInWorldFrame()
   {
-    return Eigen::Vector3d::Zero();
+    return force_;
   }
   ;
 
-  virtual Eigen::Vector3d getTorque()
+  virtual Eigen::Vector3d getTorqueInWorldFrame()
   {
-    return Eigen::Vector3d::Zero();
-  }
-  ;
-
-  virtual void setForceColor(Eigen::Vector4d color)
-  {
-    forceColor_ = color;
-  }
-  ;
-  virtual Eigen::Vector4d getForceColor()
-  {
-    return forceColor_;
-  }
-  ;
-  virtual void setTorqueColor(Eigen::Vector4d color)
-  {
-    torqueColor_ = color;
-  }
-  ;
-  virtual Eigen::Vector4d getTorqueColor()
-  {
-    return torqueColor_;
-  }
-  ;
-  virtual void setScale(double scale)
-  {
-    scale_ = scale;
-  }
-  ;
-
-  virtual double getScale()
-  {
-    return scale_;
+    return torque_;
   }
   ;
 
  protected:
+
   std::string name_;
+
+  wrench::WrenchLink* link_;
 
   Eigen::Vector3d origin_;
   Eigen::Vector3d force_;
@@ -173,10 +151,6 @@ class WrenchModuleBase : public ros_node_utils::RosNodeModuleBase
   Eigen::Vector3d linearVelocity_;
   Eigen::Vector3d angularVelocity_;
 
-  // visulization information
-  Eigen::Vector4d forceColor_;
-  Eigen::Vector4d torqueColor_;
-  double scale_;
 };
 }  // namespace wrench
 }  // namespace gazebo
