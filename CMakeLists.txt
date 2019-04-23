@@ -49,6 +49,14 @@ install(DIRECTORY include/${PROJECT_NAME}
 )
 
 # TEST
+
+catkin_add_gtest(utest test/test_trial.cpp)
+
+target_link_libraries(utest
+  ${catkin_LIBRARIES}
+  ${GAZEBO_LIBRARIES}
+)
+
 add_executable(node_test
   src/ros_node_utils/node.cpp
 )
