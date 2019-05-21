@@ -75,7 +75,8 @@ class FastAligningMagnetMagneticForce : public WrenchModuleBase
     // TODO M.Efe Tiryaki : density might be variable in future
     calculateMagnetization();
     Eigen::Matrix3d m = Eigen::Matrix3d::Zero();
-    m.block(0, 0, 3, 3) = B_grad_;
+    // TODO : CHECK THIS
+    m.block(0, 0, 3, 1) = B_grad_;
     force_ = M_ * volume_ * m * B_0_direction_;
   }
 
