@@ -86,6 +86,10 @@ class RosNodeBase
   }
   ;
 
+  ros::NodeHandle* getNodeHandle(){
+    return nodeHandle_;
+  }
+
  protected:
   std::string namespace_;
   std::string nodeName_;

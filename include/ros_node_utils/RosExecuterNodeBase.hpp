@@ -33,8 +33,6 @@ class RosExecuterNodeBase : public RosNodeBase
 
   virtual void initialize() override
   {
-    readParameters();
-
     initializePublishers();
     // init Subscribers
     initializeSubscribers();
@@ -43,6 +41,7 @@ class RosExecuterNodeBase : public RosNodeBase
     // init Services
     initializeActionServers();
   }
+
   virtual void execute()
   {
   }
