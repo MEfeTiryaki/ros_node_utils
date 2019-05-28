@@ -69,9 +69,9 @@ class DragWrench : public WrenchModuleBase
         Eigen::Vector3d lateralDirection = velocityDirection.cross(
             velocityDirection.cross(zDirection));
 
-        force = -1 * C_D_ * linearSpeed * velocityDirection;
+        force = -1 * C_D_ * linearSpeed * linearSpeed * velocityDirection;
 
-        force += -1 * C_L_ * linearSpeed * lateralDirection;
+        force += -1 * C_L_ * linearSpeed * linearSpeed * lateralDirection;
 
         //torque = -1 * C_P_ * linearSpeed * zDirection.cross(velocityDirection);
       }
