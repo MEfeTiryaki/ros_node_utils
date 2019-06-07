@@ -33,11 +33,7 @@ class RosNodeBase
   }
   ;
 
-  virtual void execute()
-  {
 
-  }
-  ;
 
   // Create the objects in this class
   virtual void create()
@@ -86,6 +82,11 @@ class RosNodeBase
   }
   ;
 
+  virtual void execute()
+  {
+
+  }
+  ;
   ros::NodeHandle* getNodeHandle(){
     return nodeHandle_;
   }
