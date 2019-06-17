@@ -123,14 +123,22 @@ inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName,
 inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, Eigen::MatrixXd& variable)
 {
   //std::cerr << "\033[0;32m" << paramName << "\033[0m" << std::endl;
+  int prevSize = variable.rows();
   double* ptr;
   std::vector<double> buffer;
   if (NodeHandle->hasParam(paramName)) {
     NodeHandle->getParam(paramName, buffer);
     ptr = &buffer[0];
+    variable = Eigen::MatrixXd::Zero(buffer.size(), buffer.size());
     variable.diagonal() << Eigen::Map<Eigen::VectorXd>(ptr, buffer.size());
   } else {
     return ERROR(paramName + " is not found. ");
+  }
+  if (prevSize != variable.rows()) {
+    return WARNING(
+        paramName + " has changed the matrix size from " + std::to_string(prevSize) + "x"
+            + std::to_string(prevSize) + " to " + std::to_string(variable.rows()) + "x"
+            + std::to_string(variable.rows()));
   }
   return true;
 
@@ -238,16 +246,17 @@ inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, Eigen:
 }
 
 // TODO : ADD a Quaternion value check
-inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName, Eigen::Quaterniond& variable)
+inline bool paramRead(ros::NodeHandle* NodeHandle, std::string paramName,
+                      Eigen::Quaterniond& variable)
 {
   int size = 4;
   //std::cerr << "\033[0;32m" << paramName << "\033[0m" << std::endl;
   std::vector<double> buffer;
   if (NodeHandle->hasParam(paramName)) {
     NodeHandle->getParam(paramName, buffer);
-    if(buffer.size()==4){
-      variable = Eigen::Quaterniond(buffer[0],buffer[1],buffer[2],buffer[3]);
-    }else{
+    if (buffer.size() == 4) {
+      variable = Eigen::Quaterniond(buffer[0], buffer[1], buffer[2], buffer[3]);
+    } else {
       return ERROR(paramName + " is not a Quaternion ");
     }
   } else {

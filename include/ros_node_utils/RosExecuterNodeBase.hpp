@@ -9,6 +9,8 @@
 
 #include <ros_node_utils/RosNodeBase.hpp>
 
+#include <std_srvs/Empty.h>
+
 namespace ros_node_utils {
 
 class RosExecuterNodeBase : public RosNodeBase
@@ -29,7 +31,7 @@ class RosExecuterNodeBase : public RosNodeBase
   virtual ~RosExecuterNodeBase()
   {
   }
-  ;
+
 
   virtual void initialize() override
   {
@@ -45,6 +47,8 @@ class RosExecuterNodeBase : public RosNodeBase
   virtual void execute()
   {
   }
-  ;
+
+
+
 };
 }  // namespace ros_node_utils

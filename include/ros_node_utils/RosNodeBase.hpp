@@ -52,7 +52,14 @@ class RosNodeBase
   {
 
   }
-  ;
+
+  // shutdown class variables
+  virtual void shutdown()
+  {
+
+  }
+
+
   // init Publisher
   virtual void initializePublishers()
   {
