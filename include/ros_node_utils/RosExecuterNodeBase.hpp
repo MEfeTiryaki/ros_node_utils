@@ -9,14 +9,14 @@
 
 #include <ros_node_utils/RosNodeBase.hpp>
 
-#include <std_srvs/Empty.h>
 
 namespace ros_node_utils {
 
 class RosExecuterNodeBase : public RosNodeBase
 {
  public:
-  RosExecuterNodeBase(std::string nodeName)
+  RosExecuterNodeBase(std::string nodeName):
+    RosNodeBase()
   {
     this->nodeName_ = nodeName;
     int argc = 0;

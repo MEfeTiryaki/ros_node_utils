@@ -17,7 +17,6 @@
 namespace ros_node_utils {
 
 class RosNodeBase
-
 {
  public:
   RosNodeBase()
@@ -27,12 +26,10 @@ class RosNodeBase
     namespace_ = ros::this_node::getNamespace();
     namespace_.erase(0, 1);
   }
-  ;
+
   virtual ~RosNodeBase()
   {
   }
-  ;
-
 
 
   // Create the objects in this class
@@ -40,13 +37,13 @@ class RosNodeBase
   {
 
   }
-  ;
+
   // Reading parameters
   virtual void readParameters()
   {
 
   }
-  ;
+
   // initize class variables
   virtual void initialize()
   {
@@ -65,13 +62,13 @@ class RosNodeBase
   {
 
   }
-  ;
+
   // init Subscribers
   virtual void initializeSubscribers()
   {
 
   }
-  ;
+
   // init Services
   virtual void initializeServices()
   {
@@ -81,19 +78,29 @@ class RosNodeBase
     //        nodeHandle_->advertiseService(namespace_ + "/" + nodeName_ + "/" + name, &Callback,
     //                                      this)));
   }
-  ;
+
   // init Services
   virtual void initializeActionServers()
   {
 
   }
-  ;
+
 
   virtual void execute()
   {
 
   }
-  ;
+
+  virtual void start()
+  {
+
+  }
+
+  virtual void stop()
+  {
+
+  }
+
   ros::NodeHandle* getNodeHandle(){
     return nodeHandle_;
   }
