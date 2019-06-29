@@ -18,12 +18,14 @@
 
 namespace ros_node_utils {
 
-ros::NodeHandle* ROSINITIALIZE(std::string nodeName){
+ros::NodeHandle* ROSINITIALIZE(std::string nodeName)
+{
   int argc = 0;
   char **argv = { };
   ros::init(argc, argv, nodeName);
   return new ros::NodeHandle("~");
-};
+}
+;
 
 template<typename NodeType>
 class RosNodeLauncher : public RosNodeModuleBase
@@ -46,31 +48,30 @@ class RosNodeLauncher : public RosNodeModuleBase
   {
   }
 
-
   // Create the objects in this class
   void create() override
   {
     RosNodeModuleBase::create();
     node_ = std::unique_ptr<NodeType>(new NodeType(getNodeHandle()));
     node_->create();
-    WARNING("create : [RosNodeLauncher]");
+    //WARNING("create : [RosNodeLauncher]");
 
   }
 
   // Reading parameters
   void readParameters() override
   {
-     RosNodeModuleBase::readParameters();
-     node_->readParameters();
-     WARNING("readParameters : [RosNodeLauncher]");
-   }
+    RosNodeModuleBase::readParameters();
+    node_->readParameters();
+    //WARNING("readParameters : [RosNodeLauncher]");
+  }
 
   // initize class variables
   void initialize() override
   {
     RosNodeModuleBase::initialize();
     node_->initialize();
-    WARNING("initialize : [RosNodeLauncher]");
+    //WARNING("initialize : [RosNodeLauncher]");
   }
 
   // shutdown class variables
@@ -78,16 +79,15 @@ class RosNodeLauncher : public RosNodeModuleBase
   {
     RosNodeModuleBase::shutdown();
     node_->shutdown();
-    WARNING("shutdown : [RosNodeLauncher]");
+    //WARNING("shutdown : [RosNodeLauncher]");
   }
-
 
   // init Publisher
   void initializePublishers() override
   {
     RosNodeModuleBase::initializePublishers();
     node_->initializePublishers();
-    WARNING("initializePublishers : [RosNodeLauncher]");
+    //WARNING("initializePublishers : [RosNodeLauncher]");
   }
 
   // init Subscribers
@@ -95,7 +95,7 @@ class RosNodeLauncher : public RosNodeModuleBase
   {
     RosNodeModuleBase::initializeSubscribers();
     node_->initializeSubscribers();
-    WARNING("initializeSubscribers : [RosNodeLauncher]");
+    //WARNING("initializeSubscribers : [RosNodeLauncher]");
   }
 
   // init Subscribers
@@ -104,8 +104,8 @@ class RosNodeLauncher : public RosNodeModuleBase
     RosNodeModuleBase::initializeServices();
     node_->initializeServices();
     nodeRestartServices_ = this->nodeHandle_->advertiseService(
-        "/ros_node_launch/restart",&RosNodeLauncher::nodeRestartCallback, this);
-    WARNING("initializeServices : [RosNodeLauncher]");
+        "/ros_node_launch/restart", &RosNodeLauncher::nodeRestartCallback, this);
+    //WARNING("initializeServices : [RosNodeLauncher]");
   }
 
   void run()
@@ -130,9 +130,7 @@ class RosNodeLauncher : public RosNodeModuleBase
     node_->start();
   }
 
-
-  bool nodeRestartCallback(std_srvs::Empty::Request& request,
-    std_srvs::Empty::Response& response)
+  bool nodeRestartCallback(std_srvs::Empty::Request& request, std_srvs::Empty::Response& response)
   {
     restart();
     return true;
@@ -140,10 +138,9 @@ class RosNodeLauncher : public RosNodeModuleBase
 
  protected:
 
-   ros::ServiceServer nodeRestartServices_;
+  ros::ServiceServer nodeRestartServices_;
 
-   std::unique_ptr<RosNodeBase> node_;
-
+  std::unique_ptr<RosNodeBase> node_;
 
 };
 }  // namespace ros_node_utils
