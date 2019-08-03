@@ -110,7 +110,7 @@ class RosNodeLauncher : public RosNodeModuleBase
 
   void run()
   {
-    ros::Rate mainRate = ros::Rate(100);
+    ros::Rate mainRate = ros::Rate(2000);
     while (ros::ok()) {
       ros::spinOnce();
       mainRate.sleep();
