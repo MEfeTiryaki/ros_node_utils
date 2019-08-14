@@ -33,7 +33,9 @@ class LorentzWrench : public WrenchModuleBase
       : WrenchModuleBase(nodeHandle, link),
   B_0_(Eigen::Vector3d::Zero()),
   B_0_direction_(Eigen::Vector3d(1.0, 0.0, 0.0)),
-  current_(0.0)
+  current_(0.0),
+  coilDirection_(Eigen::Vector3d::UnitX()),
+  coilID_(0)
   {
     this->name_ = "Lorenz_force";
   }
@@ -65,8 +67,14 @@ class LorentzWrench : public WrenchModuleBase
     magneticFieldSubscriber_ = this->nodeHandle_->subscribe("magnetic_field", 10,
                                                             &LorentzWrench::magneticFieldCallback,
                                                             this);
-    currentSubscriber_ = this->nodeHandle_->subscribe("coil_current", 10,
+    currentSubscriber_ = this->nodeHandle_->subscribe("coil_current_"+std::to_string(coilID_), 10,
                                                       &LorentzWrench::currentCallback, this);
+  }
+
+  virtual void advance() override
+  {
+    // TODO M.Efe Tiryaki : correct This
+    torque_ = current_* (link_->getOrientationWorldtoBase()*coilDirection_).cross(B_0_) ;
   }
 
   Eigen::Vector3d getMainMagneticField()
@@ -74,6 +82,13 @@ class LorentzWrench : public WrenchModuleBase
     return B_0_;
   }
 
+  void setCoilID(int id ){
+    coilID_ = id;
+  }
+  void setCoilDirection(Eigen::Vector3d dir)
+  {
+    coilDirection_ = dir ;
+  }
   void setMainMagneticField(Eigen::Vector3d B_0)
   {
     B_0_ = B_0;
@@ -102,13 +117,16 @@ class LorentzWrench : public WrenchModuleBase
   void currentCallback(const std_msgs::Float64& msg)
   {
     current_ = msg.data;
+    std::cout<< current_ <<std::endl;
   }
   ;
 
  protected:
+   int coilID_;
   Eigen::Vector3d B_0_;
   Eigen::Vector3d B_0_direction_;
   double current_;
+  Eigen::Vector3d coilDirection_;
 
   // Subscriber
   ros::Subscriber magneticFieldSubscriber_;
