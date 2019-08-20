@@ -32,7 +32,8 @@ class DragWrench : public WrenchModuleBase
         viscosity_(-1.0),
         density_(-1.0),
         incidenceAngle_(0.0),
-        rotationAngle_(0.0)
+        rotationAngle_(0.0),
+        dragModel_(1)
   {
     this->name_ = "drag";
   }
@@ -53,6 +54,9 @@ class DragWrench : public WrenchModuleBase
     paramRead(this->nodeHandle_, "/physics/fluid/fluid_density", density_);
     paramRead(this->nodeHandle_, "/physics/fluid/fluid_viscosity", viscosity_);
     paramRead(this->nodeHandle_, "/physics/fluid/drag_position", origin_);
+    paramRead(this->nodeHandle_, "/physics/fluid/drag_model", dragModel_);
+
+
   }
 
   virtual void advance() override
@@ -64,14 +68,24 @@ class DragWrench : public WrenchModuleBase
       Eigen::Vector3d torque = Eigen::Vector3d::Zero();
       if (linearSpeed != 0) {
         auto velocityDirection = this->link_->getLinearVelocityOfBaseInBaseFrame().normalized();
-        Eigen::Vector3d zDirection = this->link_->getOrientationWorldtoBase()
-            * Eigen::Vector3d::UnitZ();
-        Eigen::Vector3d lateralDirection = velocityDirection.cross(
-            velocityDirection.cross(zDirection));
 
-        force = -1 * C_D_ * linearSpeed * linearSpeed * velocityDirection;
+        Eigen::Vector3d headingDirection =  Eigen::Vector3d::UnitZ();
+        Eigen::Vector3d lateralDirection =  (velocityDirection.cross(headingDirection).
+                                        cross(velocityDirection)).normalized();
 
-        force += -1 * C_L_ * linearSpeed * linearSpeed * lateralDirection;
+        std::cout << "linearSpeed : " << linearSpeed << std::endl;
+        std::cout << "angleOfAttack : " << asin((velocityDirection.cross(headingDirection)).norm()) << std::endl;
+        std::cout << "v : " << velocityDirection.transpose() << std::endl;
+        std::cout << "l : " << lateralDirection.transpose() << std::endl;
+        std::cout << "_____________________________ " << std::endl;
+
+
+        if(dragModel_==1){
+          force = -1 * c_D_(0) * linearSpeed * velocityDirection;
+        }else if(dragModel_==2){
+          force = -1 * c_D_(1) * linearSpeed * linearSpeed * velocityDirection;
+        }
+        force += -1 * C_L_ * linearSpeed *  lateralDirection;
 
         //torque = -1 * C_P_ * linearSpeed * zDirection.cross(velocityDirection);
       }
@@ -88,7 +102,7 @@ class DragWrench : public WrenchModuleBase
         Eigen::Vector3d zDirection = this->link_->getOrientationWorldtoBase()
             * Eigen::Vector3d::UnitZ();
 
-        torque_ += -1 * C_R_x_ * angularSpeed * angularSpeed * angularVelocityDirection[0]
+        torque_ += -1 * C_R_x_ *angularSpeed * angularSpeed * angularVelocityDirection[0]
             * Eigen::Vector3d::UnitX();
         torque_ += -1 * C_R_x_ * angularSpeed * angularSpeed * angularVelocityDirection[1]
             * Eigen::Vector3d::UnitY();
@@ -147,6 +161,8 @@ class DragWrench : public WrenchModuleBase
 
   double incidenceAngle_;
   double rotationAngle_;
+
+  int dragModel_;
 };
 
 }  // namespace wrench
