@@ -98,4 +98,6 @@ script:
   - source devel/setup.bash
   #- catkin_make run_tests && catkin_test_results
   - roscore &
+  - ls
+  - ls -r devel
   - ~/catkin_ws/devel/lib/ros_node_utils/utest
