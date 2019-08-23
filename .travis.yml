@@ -57,6 +57,7 @@ before_install:
 install:
   - mkdir -p ~/catkin_ws/src
   - cd ~/catkin_ws/src
+  - git clone https://github.com/MEfeTiryaki/ros_node_utils.git
   - catkin init
   # Create the devel/setup.bash (run catkin_make with an empty workspace) and
   # source it to set the path variables.

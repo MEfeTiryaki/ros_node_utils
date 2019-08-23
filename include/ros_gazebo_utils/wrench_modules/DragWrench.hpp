@@ -73,19 +73,20 @@ class DragWrench : public WrenchModuleBase
         Eigen::Vector3d lateralDirection =  (velocityDirection.cross(headingDirection).
                                         cross(velocityDirection)).normalized();
 
+        /*
         std::cout << "linearSpeed : " << linearSpeed << std::endl;
         std::cout << "angleOfAttack : " << asin((velocityDirection.cross(headingDirection)).norm()) << std::endl;
         std::cout << "v : " << velocityDirection.transpose() << std::endl;
         std::cout << "l : " << lateralDirection.transpose() << std::endl;
         std::cout << "_____________________________ " << std::endl;
-
+        */
 
         if(dragModel_==1){
           force = -1 * c_D_(0) * linearSpeed * velocityDirection;
         }else if(dragModel_==2){
           force = -1 * c_D_(1) * linearSpeed * linearSpeed * velocityDirection;
+          force += -1 * C_L_ * linearSpeed *  lateralDirection;
         }
-        force += -1 * C_L_ * linearSpeed *  lateralDirection;
 
         //torque = -1 * C_P_ * linearSpeed * zDirection.cross(velocityDirection);
       }
