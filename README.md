@@ -20,3 +20,5 @@ ros_node_utils package requires following system specifications;
 * Eigen 3.3 (Ubuntu 16.04 libeigen-dev bulunduruyor)
 * Boost 1.58.0
 * [catkin_tools](http://catkin-tools.readthedocs.io/en/latest/verbs/catkin_build.html) 
+
+[![Build Status](https://travis-ci.com/MEfeTiryaki/ros_node_utils.svg?branch=master)](https://travis-ci.com/MEfeTiryaki/ros_node_utils)
