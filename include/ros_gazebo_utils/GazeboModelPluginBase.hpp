@@ -204,6 +204,7 @@ class GazeboModelPluginBase : public ModelPlugin, public ros_node_utils::RosNode
   // Robot links
   physics::LinkPtr baseLink_;
   Eigen::Vector3d positionWorldToBase_;
+  Eigen::Vector3d positionWorldToCoM_;
   Eigen::Quaterniond orientationWorldToBase_;
   Eigen::Vector3d linearVelocityOfBaseInBaseFrame_;
   Eigen::Vector3d angularVelocityOfBaseInBaseFrame_;

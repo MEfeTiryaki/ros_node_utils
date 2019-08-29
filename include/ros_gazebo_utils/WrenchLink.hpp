@@ -50,6 +50,19 @@ class WrenchLink
     return positionWorldtoBaseInWorldFrame_;
   }
   ;
+
+  void setCoMPositionWorldtoBase(Eigen::Vector3d position)
+  {
+    positionWorldtoCoMInWorldFrame_ = position;
+  }
+  ;
+
+  Eigen::Vector3d getCoMPositionWorldtoBase()
+  {
+    return positionWorldtoCoMInWorldFrame_;
+  }
+  ;
+
   void setOrientationWorldtoBase(Eigen::Quaterniond orientation)
   {
     orientationWorldtoBaseInWorldFrame_ = orientation;
@@ -113,6 +126,7 @@ class WrenchLink
  protected:
 
   Eigen::Vector3d positionWorldtoBaseInWorldFrame_;
+  Eigen::Vector3d positionWorldtoCoMInWorldFrame_;
   Eigen::Quaterniond orientationWorldtoBaseInWorldFrame_;
   Eigen::Vector3d linearVelocityOfBaseInBaseFrame_;
   Eigen::Vector3d angularVelocityOfBaseInBaseFrame_;

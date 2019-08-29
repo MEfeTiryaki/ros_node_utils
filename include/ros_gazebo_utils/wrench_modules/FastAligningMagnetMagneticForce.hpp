@@ -37,13 +37,10 @@ class FastAligningMagnetMagneticForce : public WrenchModuleBase
   {
     this->name_ = "fast_aligning_magnet_magnetic_force";
   }
-  ;
 
-  ;
   virtual ~FastAligningMagnetMagneticForce()
   {
   }
-  ;
 
   virtual void readParameters() override
   {
@@ -78,13 +75,15 @@ class FastAligningMagnetMagneticForce : public WrenchModuleBase
     // TODO : CHECK THIS
     m.block(0, 0, 3, 1) = B_grad_;
     force_ = M_ * volume_ * m * B_0_direction_;
+    torque_ = (this->link_->getPositionWorldtoBase()
+        + this->link_->getOrientationWorldtoBase() * origin_
+        - this->link_->getCoMPositionWorldtoBase()).cross(force_);
   }
 
   virtual void calculateMagnetization()
   {
     //M_ = 1.05 * 1000000.0;  // A/m
   }
-  ;
 
   //CALLBACK
   void magneticGradientCallback(const std_msgs::Float64MultiArray& msg)
@@ -97,7 +96,6 @@ class FastAligningMagnetMagneticForce : public WrenchModuleBase
       //std::cerr << "\033[0;31m" << "Magnetic Gradient should be 3D" << "\033[0m" << std::endl;
     }
   }
-  ;
 
  protected:
   double M_;

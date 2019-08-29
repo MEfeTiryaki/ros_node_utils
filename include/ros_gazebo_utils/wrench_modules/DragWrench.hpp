@@ -37,12 +37,12 @@ class DragWrench : public WrenchModuleBase
   {
     this->name_ = "drag";
   }
-  ;
+
 
   virtual ~DragWrench()
   {
   }
-  ;
+
 
   virtual void readParameters() override
   {
@@ -98,10 +98,7 @@ class DragWrench : public WrenchModuleBase
       calculateDragTorqueCoefficient();
       double angularSpeed = this->link_->getAngularVelocityOfBaseInBaseFrame().norm();
       if (angularSpeed != 0) {
-        auto angularVelocityDirection = this->link_->getOrientationWorldtoBase().inverse()
-            * this->link_->getAngularVelocityOfBaseInBaseFrame().normalized();
-        Eigen::Vector3d zDirection = this->link_->getOrientationWorldtoBase()
-            * Eigen::Vector3d::UnitZ();
+        auto angularVelocityDirection = this->link_->getAngularVelocityOfBaseInBaseFrame().normalized();
 
         torque_ += -1 * C_R_x_ *angularSpeed * angularSpeed * angularVelocityDirection[0]
             * Eigen::Vector3d::UnitX();
@@ -111,8 +108,10 @@ class DragWrench : public WrenchModuleBase
             * Eigen::Vector3d::UnitZ();
       }
     }
+
     force_ = this->link_->getOrientationWorldtoBase() * force_;
-    torque_ = this->link_->getOrientationWorldtoBase() * torque_;
+    torque_ = this->link_->getOrientationWorldtoBase() * torque_ ;
+
   }
 
   void calculateDragForceCoefficient()
@@ -133,7 +132,6 @@ class DragWrench : public WrenchModuleBase
     //C_P_ = c_P_(0) * incidenceAngle_ * incidenceAngle_ + c_P_(1) * incidenceAngle_ + c_P_(2);
 
   }
-  ;
 
   void calculateDragTorqueCoefficient()
   {
@@ -142,7 +140,7 @@ class DragWrench : public WrenchModuleBase
 
     C_R_z_ = c_R_z_(0);
   }
-  ;
+
 
  protected:
 

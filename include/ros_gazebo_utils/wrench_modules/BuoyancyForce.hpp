@@ -59,7 +59,7 @@ class BuoyancyForce : public WrenchModuleBase
     // TODO M.Efe Tiryaki : density might be variable in future
     calculateFluidDensity();
     force_ =  volume_ * fluidDensity_ *- 1 * this->link_->getGravity();
-
+    torque_ = (this->link_->getPositionWorldtoBase()- this->link_->getCoMPositionWorldtoBase()).cross(force_);
   }
 
   /*! \~english

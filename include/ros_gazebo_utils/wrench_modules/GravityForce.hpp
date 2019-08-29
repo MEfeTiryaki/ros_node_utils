@@ -37,13 +37,13 @@ class GravityForce : public WrenchModuleBase
   {
     this->name_ = "gravity";
   }
-  ;
 
-  ;
+
+
   virtual ~GravityForce()
   {
   }
-  ;
+
 
   virtual void readParameters() override
   {
