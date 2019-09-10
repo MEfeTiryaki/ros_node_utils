@@ -64,7 +64,7 @@ class FastAligningMagnetMagneticForce : public WrenchModuleBase
   {
     // TODO Efe : add magnetic field here as well
     magneticGradientSubscriber_ = this->nodeHandle_->subscribe(
-        "magnetic_gradient", 10, &FastAligningMagnetMagneticForce::magneticGradientCallback, this);
+        "/gazebo/magnetic_gradient", 10, &FastAligningMagnetMagneticForce::magneticGradientCallback, this);
   }
 
   virtual void advance() override

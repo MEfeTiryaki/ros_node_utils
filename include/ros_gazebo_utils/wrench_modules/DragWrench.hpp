@@ -54,7 +54,7 @@ class DragWrench : public WrenchModuleBase
     paramRead(this->nodeHandle_, "/physics/fluid/fluid_density", density_);
     paramRead(this->nodeHandle_, "/physics/fluid/fluid_viscosity", viscosity_);
     paramRead(this->nodeHandle_, "/physics/fluid/drag_position", origin_);
-    paramRead(this->nodeHandle_, "/physics/fluid/drag_model", dragModel_);
+    paramRead(this->nodeHandle_, "/physics/fluid/drag/drag_model", dragModel_);
 
 
   }
