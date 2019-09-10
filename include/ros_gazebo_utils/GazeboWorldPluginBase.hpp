@@ -133,17 +133,17 @@ class GazeboWorldPluginBase : public WorldPlugin, public ros_node_utils::RosNode
   virtual void readSimulation()
   {
     for (int i = 0; models_.size(); i++) {
-      auto pose = models_[i]->GetWorldPose();
-      this->modelPositionsInWorldFrame_[i] = Eigen::Vector3d(pose.pos.x, pose.pos.y, pose.pos.z);
-      this->modelOrientationsInWorldFrame_[i] = Eigen::Quaterniond(pose.rot.w, pose.rot.x,
-                                                                   pose.rot.y, pose.rot.z);
+      auto pose = models_[i]->WorldPose();
+      this->modelPositionsInWorldFrame_[i] = Eigen::Vector3d(pose.Pos().X(), pose.Pos().Y(), pose.Pos().Z());
+      this->modelOrientationsInWorldFrame_[i] = Eigen::Quaterniond(pose.Rot().W(), pose.Rot().X(),
+                                                                   pose.Rot().Y(), pose.Rot().Z());
 
-      math::Vector3 linearVel = models_[i]->GetRelativeLinearVel();
-      math::Vector3 angularVel = models_[i]->GetRelativeAngularVel();
-      this->modelLinearVelocitiesInBaseFrame_[i] = Eigen::Vector3d(linearVel.x, linearVel.y,
-                                                                linearVel.z);
-      this->modelAngularVelocitiesInBaseFrame_[i] = Eigen::Vector3d(angularVel.x, angularVel.y,
-                                                                 angularVel.z);
+      ignition::math::Vector3d linearVel = models_[i]->RelativeLinearVel();
+      ignition::math::Vector3d angularVel = models_[i]->RelativeAngularVel();
+      this->modelLinearVelocitiesInBaseFrame_[i] = Eigen::Vector3d(linearVel.X(), linearVel.Y(),
+                                                                linearVel.Z());
+      this->modelAngularVelocitiesInBaseFrame_[i] = Eigen::Vector3d(angularVel.X(), angularVel.Y(),
+                                                                 angularVel.Z());
 
     }
   }
@@ -165,11 +165,11 @@ class GazeboWorldPluginBase : public WorldPlugin, public ros_node_utils::RosNode
 
       for (int i = 0; i < models_.size(); i++) {
         this->baseLinks_[i]->AddForceAtRelativePosition(
-            math::Vector3(forcesInWorldFrame[i][0], forcesInWorldFrame[i][1],
+            ignition::math::Vector3<double>(forcesInWorldFrame[i][0], forcesInWorldFrame[i][1],
                           forcesInWorldFrame[i][2]),
-            math::Vector3(origins[i][0], origins[i][1], origins[i][2]));
+                          ignition::math::Vector3<double>(origins[i][0], origins[i][1], origins[i][2]));
         this->baseLinks_[i]->AddRelativeTorque(
-            math::Vector3(torquesInWorldFrame[i][0], torquesInWorldFrame[i][1],
+            ignition::math::Vector3<double>(torquesInWorldFrame[i][0], torquesInWorldFrame[i][1],
                           torquesInWorldFrame[i][2]));
       }
 
@@ -182,9 +182,9 @@ class GazeboWorldPluginBase : public WorldPlugin, public ros_node_utils::RosNode
    */
   virtual void updateModels()
   {
-    if (world_->GetModelCount() != models_.size()) {
+    if (world_->ModelCount() != models_.size()) {
       physics::Model_V models;
-      models = world_->GetModels();
+      models = world_->Models();
       baseLinks_.clear();
       modelPositionsInWorldFrame_.clear();
       modelOrientationsInWorldFrame_.clear();
