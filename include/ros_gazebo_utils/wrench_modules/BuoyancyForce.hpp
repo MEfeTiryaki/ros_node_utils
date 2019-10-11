@@ -54,7 +54,7 @@ class BuoyancyForce : public WrenchModuleBase
   }
 
 
-  virtual void advance() override
+  virtual void advance(double dt) override
   {
     // TODO M.Efe Tiryaki : density might be variable in future
     calculateFluidDensity();

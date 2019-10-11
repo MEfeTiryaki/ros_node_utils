@@ -67,7 +67,7 @@ class FastAligningMagnetMagneticForce : public WrenchModuleBase
         "/gazebo/magnetic_gradient", 10, &FastAligningMagnetMagneticForce::magneticGradientCallback, this);
   }
 
-  virtual void advance() override
+  virtual void advance(double dt) override
   {
     // TODO M.Efe Tiryaki : density might be variable in future
     calculateMagnetization();

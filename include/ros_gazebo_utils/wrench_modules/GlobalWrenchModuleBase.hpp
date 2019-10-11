@@ -42,7 +42,7 @@ class GlobalWrenchModuleBase : public ros_node_utils::RosNodeModuleBase
   }
   ;
 
-  virtual void advance()
+  virtual void advance(double dt)
   {
 
   }

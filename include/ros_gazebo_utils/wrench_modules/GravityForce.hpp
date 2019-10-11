@@ -55,7 +55,7 @@ class GravityForce : public WrenchModuleBase
 
   }
 
-  virtual void advance()
+  virtual void advance(double dt)
   {
     force_ = this->link_->getMass() * this->link_->getGravity();
   }

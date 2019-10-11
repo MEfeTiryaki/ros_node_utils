@@ -59,7 +59,7 @@ class DragWrench : public WrenchModuleBase
 
   }
 
-  virtual void advance() override
+  virtual void advance(double dt) override
   {
     {
       calculateDragForceCoefficient();
