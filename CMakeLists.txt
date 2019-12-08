@@ -8,9 +8,7 @@ find_package(catkin REQUIRED
 COMPONENTS
   roscpp
   rospy
-  urdf
-  xacro
-  tf
+
 )
 
 catkin_package(
@@ -20,9 +18,6 @@ catkin_package(
   CATKIN_DEPENDS
     roscpp
     rospy
-    urdf
-    xacro
-    tf
 )
 
 include_directories(

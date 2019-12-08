@@ -10,12 +10,6 @@
   <buildtool_depend>catkin</buildtool_depend>
   <depend>rospy</depend>
   <depend>roscpp</depend>
-  <depend>gazebo</depend>
-  <depend>gazebo_ros</depend>
-  <depend>gazebo_plugins</depend>
-  <depend>urdf</depend>
-  <depend>xacro</depend>
-  <depend>tf</depend>
 
 
 </package>
