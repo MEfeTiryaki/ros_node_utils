@@ -3,14 +3,11 @@ project(ros_node_utils)
 
 add_definitions("-std=c++11")
 
-find_package(gazebo REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(catkin REQUIRED
 COMPONENTS
   roscpp
   rospy
-  gazebo_plugins
-  gazebo_ros
   urdf
   xacro
   tf
@@ -23,8 +20,6 @@ catkin_package(
   CATKIN_DEPENDS
     roscpp
     rospy
-    gazebo_plugins
-    gazebo_ros
     urdf
     xacro
     tf
@@ -33,13 +28,11 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
-  ${GAZEBO_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIR}
 )
 link_directories(
   include
   ${catkin_LIBRARY_DIRS}
-  ${GAZEBO_LIBRARY_DIRS}
 )
 
 
@@ -54,7 +47,6 @@ catkin_add_gtest(utest test/test_trial.cpp)
 
 target_link_libraries(utest
   ${catkin_LIBRARIES}
-  ${GAZEBO_LIBRARIES}
 )
 
 add_executable(node_test
@@ -65,8 +57,19 @@ add_dependencies(node_test
 )
 target_link_libraries(node_test
   ${catkin_LIBRARIES}
-  ${GAZEBO_LIBRARIES}
 )
+
+
+add_executable(clock_server
+  src/ros_node_utils/clock_server.cpp
+)
+add_dependencies(clock_server
+  ${catkin_EXPORTED_TARGETS}
+)
+target_link_libraries(clock_server
+  ${catkin_LIBRARIES}
+)
+
 
 install(TARGETS node_test
         ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
