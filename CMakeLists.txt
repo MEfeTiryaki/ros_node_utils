@@ -5,20 +5,21 @@ add_definitions("-std=c++11")
 
 find_package(Eigen3 REQUIRED)
 find_package(catkin REQUIRED
-COMPONENTS
-  roscpp
-  rospy
-
+  COMPONENTS
+    roscpp
 )
 
 catkin_package(
   INCLUDE_DIRS
     include
-  LIBRARIES # only header files, therefore no libraries
+  LIBRARIES # only header files, therefore no
+
   CATKIN_DEPENDS
     roscpp
-    rospy
 )
+
+
+
 
 include_directories(
   include
@@ -27,31 +28,8 @@ include_directories(
 )
 link_directories(
   include
-  ${catkin_LIBRARY_DIRS}
-)
-
-
-install(DIRECTORY include/${PROJECT_NAME}
-        DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-        PATTERN ".svn" EXCLUDE
-)
-
-# TEST
-
-catkin_add_gtest(utest test/test_trial.cpp)
-
-target_link_libraries(utest
   ${catkin_LIBRARIES}
-)
-
-add_executable(node_test
-  src/ros_node_utils/node.cpp
-)
-add_dependencies(node_test
-  ${catkin_EXPORTED_TARGETS}
-)
-target_link_libraries(node_test
-  ${catkin_LIBRARIES}
+  # /home/nmrsu/installization/ros_catkin_ws/install_isolated/lib/libroscpp.so
 )
 
 
@@ -63,10 +41,35 @@ add_dependencies(clock_server
 )
 target_link_libraries(clock_server
   ${catkin_LIBRARIES}
+  # /home/nmrsu/installization/ros_catkin_ws/install_isolated/lib/
 )
 
+install(DIRECTORY include/${PROJECT_NAME}
+        DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+        PATTERN ".svn" EXCLUDE
+)
 
-install(TARGETS node_test
-        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-        RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION})
+# TEST
+
+# catkin_add_gtest(utest test/test_trial.cpp)
+#
+# target_link_libraries(utest
+#   ${catkin_LIBRARIES}
+# )
+
+# add_executable(node_test
+#   src/ros_node_utils/node.cpp
+# )
+# add_dependencies(node_test
+#   ${catkin_EXPORTED_TARGETS}
+# )
+# target_link_libraries(node_test
+#   ${catkin_LIBRARIES}
+# )
+
+
+#
+# install(TARGETS node_test
+#         ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#         LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#         RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION})
